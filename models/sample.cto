@@ -1,0 +1,101 @@
+/**
+ * Sample business network definition.
+ */
+namespace org.acme.sample
+
+/**
+* An enumerated type
+*/
+enum CarLegalStatus {
+o AWAITING_APROVAL
+o APROVED
+o REVOKED
+}
+
+/**
+* An enumerated type
+*/
+enum CarHireStatus {
+ o AVAILABLE
+ o IN_USE
+}
+
+/**
+* An enumerated type
+*/
+enum Rating{
+  o R1
+  o R2
+  o R3
+  o R4
+  o R5
+}
+
+asset Car identified by VIN {
+  o String VIN
+	--> Leaser Owner
+    --> Hirer Hirer optional
+	o String Name
+    o CarLegalStatus CarLegalStatus
+    o CarHireStatus CarHireStatus
+    o Long Longitude
+    o Long Latitude
+    o Long Milage
+    o Long RatingAverage
+    o Long NumberOfRatings
+}
+
+participant Leaser identified by LeaserId {
+  o String LeaserId
+  o String FirstName
+  o String LastName
+}
+
+participant Hirer identified by HirerId {
+  o String HirerId
+  o String FirstName
+  o String LastName
+  o Boolean DriversLicenseStatus default = false
+  o DateTime LicenseValidUntil
+}
+
+participant Regulator identified by RegulatorId {
+	o String RegulatorId
+    o String Name
+}
+
+participant Insurer identified by InsurerId {
+  o String InsurerId
+  o String Name
+}
+
+participant Garage identified by GarageId {
+  o String GarageId
+  o String Name
+}
+
+transaction RegisterCar {
+ o String Name
+ o String VIN
+}
+
+transaction AproveCar {
+  o String VIN
+}
+
+transaction RevokeCar {
+  o String VIN
+}
+
+transaction HireCar {
+o String VIN
+} 
+
+transaction ReturnCar {
+o String VIN
+} 
+  
+transaction RateCar {
+ o String VIN
+ o Rating Rating
+}
